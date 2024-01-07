@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# Define the directory where you want to attach the script (in this case, bin directory)
 directory="/usr/local/bin/"
 
 # Check if the directory exists
@@ -16,10 +15,8 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-# Get the script file path from the first argument
 script_path="$1"
 
-# Get the desired script name in the bin directory from the second argument
 script_name="$2"
 
 # Check if the specified script file exists
