@@ -3,19 +3,19 @@ use std::{error::Error, os::unix::ffi::OsStrExt, path::PathBuf};
 pub fn build_path(mut args: std::env::Args) -> Result<PathBuf, Box<dyn Error>> {
     args.next();
     let raw_filename = args.next().expect("Filename argument expected");
-    let mut filename = PathBuf::from(raw_filename.clone());
-    let mut dest_dir = get_current_working_dir()?;
-    if let Some(dirname) = args.next() {
-        dest_dir = get_abs_dir_from_str(&dirname)?;
-    }
+    let mut filename = get_path_from_str(&raw_filename, false)?;
     if filename.exists() {
         filename = find_longest_path(filename)?;
+    }
+    let mut dest_dir = get_current_working_dir()?;
+    if let Some(dirname) = args.next() {
+        dest_dir = get_path_from_str(&dirname, true)?;
     }
     let parsed_filename = parse_path(
         filename.as_os_str().to_str().unwrap().to_string(),
         raw_filename,
     );
-    dest_dir.push(PathBuf::from(parsed_filename));
+    dest_dir.push(get_path_from_str(&parsed_filename, false)?);
     Ok(dest_dir)
 }
 
@@ -28,7 +28,7 @@ pub fn exit_program(exit_code: i32) -> ! {
 }
 
 fn get_current_working_dir() -> std::io::Result<PathBuf> {
-    PathBuf::from(".").canonicalize()
+    get_path_from_str(".", true)
 }
 
 fn find_longest_path(dir: PathBuf) -> Result<PathBuf, std::io::Error> {
@@ -57,8 +57,12 @@ fn get_max_abs_path(path1: PathBuf, path2: PathBuf) -> PathBuf {
     }
 }
 
-fn get_abs_dir_from_str(dirname: &str) -> Result<PathBuf, std::io::Error> {
-    PathBuf::from(dirname).canonicalize()
+fn get_path_from_str(dirname: &str, is_abs: bool) -> Result<PathBuf, std::io::Error> {
+    let mut path = PathBuf::from(dirname);
+    if is_abs {
+        path = path.canonicalize()?;
+    }
+    Ok(path)
 }
 
 fn parse_path(path: String, prefix: String) -> String {

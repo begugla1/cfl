@@ -8,31 +8,24 @@ pub fn print_file_len_analisys_result(
     abs_path: PathBuf,
 ) {
     println!("Considered file: '{}'", abs_path.display());
-    if !(filename_len_valid && abs_file_path_len_valid) {
-        if !filename_len_valid {
-            println!(
-                "Filename len invalid: {}/{} bytes ❌",
-                filename_byte_len, MAX_FILE_LEN
-            );
-        }
-        if !abs_file_path_len_valid {
-            println!(
-                "Absolute file path len invalid: {}/{} bytes ❌",
-                abs_path_len, MAX_ABS_PATH_LEN
-            );
-        }
-        println!("You need to change something 🙁")
+    let filename_result_template = if filename_len_valid {
+        "Filename len valid ✅"
     } else {
-        println!(
-            "Filename len valid: {}/{} bytes ✅",
-            filename_byte_len, MAX_FILE_LEN
-        );
-        println!(
-            "Absolute file path len valid: {}/{} bytes ✅",
-            abs_path_len, MAX_ABS_PATH_LEN
-        );
-        println!("All right! ✅")
-    }
+        "Filename len invalid ❌"
+    };
+    let abs_path_result_template = if abs_file_path_len_valid {
+        "Absolute file path len valid ✅"
+    } else {
+        "Absolute file path len invalid ❌"
+    };
+    println!(
+        "{} {}/{} bytes",
+        filename_result_template, filename_byte_len, MAX_FILE_LEN
+    );
+    println!(
+        "{} {}/{} bytes",
+        abs_path_result_template, abs_path_len, MAX_ABS_PATH_LEN
+    );
 }
 
 pub fn print_doc() {
