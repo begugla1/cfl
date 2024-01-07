@@ -12,7 +12,7 @@ const RESULT_EMOJII: [char; 2] = ['❌', '✅'];
 
 /// Checking if it possible to create file with given name in current directory
 /// based on it's length and length of absolute path with this file.
-pub fn is_file_len_valid(filename: &str) -> Result<bool, Box<dyn Error>> {
+pub fn is_file_len_valid_in_curr_dir(filename: &str) -> Result<bool, Box<dyn Error>> {
     if !utils::filename_is_unique(filename, &utils::get_current_working_dir()?)? {
         return Err(Box::from(format!(
             "File with name `{}` already exists",
