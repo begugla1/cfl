@@ -2,17 +2,20 @@ use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut args = cfl::collect_user_args().skip(1);
+    let mut exit_code = 0;
     match args.len() {
-        0 => cfl::print_doc(),
         1 => {
-            let filename_is_valid = cfl::is_file_len_valid_in_curr_dir(
-                &args.next().expect("Filename argument expected"),
-            )?;
-            if !filename_is_valid {
-                cfl::exit_program(1)
-            }
+            exit_code = cfl::is_file_len_valid(
+                &args.next().unwrap(), cfl::get_current_working_dir()?
+            )? as i32;
+        },
+        2 => {
+            exit_code = cfl::is_file_len_valid(
+                &args.next().unwrap(), cfl::get_dir_from_str(&args.next().unwrap())?
+            )? as i32;
         }
-        _ => todo!(),
+        3 => todo!(),
+        _ => cfl::print_doc(),
     }
-    Ok(())
+    cfl::exit_program(exit_code)
 }

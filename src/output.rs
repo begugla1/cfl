@@ -18,6 +18,10 @@ pub fn print_file_len_analisys_result(
 
 pub fn print_doc() {
     println!("Check if it possible to:");
-    println!("1. create <filename> in current dir: cfl <filename>");
-    println!("2. copy/move <filename> in <dest_path>: cfl <filename> <dest_path>");
+    println!(
+        "1. create <filename> in <dir>: cfl <filename> <dir> \n 
+        You can avoid passing dir argument if you suggest the current one
+    "
+    );
+    println!("2. copy/move <filename> in <dest_path>: cfl -l <filename> <dest_path>");
 }

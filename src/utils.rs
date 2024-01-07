@@ -14,6 +14,10 @@ pub fn get_current_working_dir() -> io::Result<PathBuf> {
     env::current_dir()
 }
 
+pub fn get_dir_from_str(dirname: &str) -> Result<PathBuf, io::Error> {
+    PathBuf::from(dirname).canonicalize()
+}
+
 pub fn collect_user_args() -> env::Args {
     env::args()
 }
