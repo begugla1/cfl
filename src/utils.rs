@@ -57,7 +57,6 @@ pub fn collect_user_args() -> std::env::Args {
     std::env::args()
 }
 
-/// If `program_result` is true, then program will exit with 0 code, otherwise with 1 code
 pub fn exit_program(exit_code: i32) -> ! {
     std::process::exit(exit_code)
 }
