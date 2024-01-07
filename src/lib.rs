@@ -9,7 +9,7 @@ pub use utils::{build_path, collect_user_args};
 const MAX_FILE_LEN: usize = 255;
 const MAX_ABS_PATH_LEN: usize = 4096;
 
-/// Checking if existing of file with given `filename` is possible
+/// Checking if existing of file with given `abs_path` is possible
 pub fn is_file_len_valid(abs_path: PathBuf) -> Result<(), Box<dyn Error>> {
     let filename = abs_path
         .components()
