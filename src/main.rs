@@ -6,7 +6,6 @@ fn main() -> Result<(), Box<dyn Error>> {
         cfl::print_doc();
     } else {
         let path = cfl::build_path(args)?;
-        dbg!(&path);
         cfl::is_file_len_valid(path)?;
     }
     Ok(())
