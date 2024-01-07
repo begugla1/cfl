@@ -1,3 +1,7 @@
-attach_cfl:
+attach_cfl: build
 	chmod +x scripts/attach.sh
-	./scripts/attach.sh "$(shell pwd)/target/release/cfl" cfl
+	./scripts/attach.sh "$(shell pwd)/dist/cfl" cfl
+
+build:
+	cargo build --release
+	cp target/release/cfl dist
