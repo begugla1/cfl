@@ -1,4 +1,4 @@
-attach_cfl: build
+attach_cfl:
 	chmod +x scripts/attach.sh
 	./scripts/attach.sh "$(shell pwd)/dist/cfl" cfl
 
