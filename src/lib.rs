@@ -4,7 +4,7 @@ mod utils;
 use std::{error::Error, path::PathBuf};
 
 pub use output::print_doc;
-pub use utils::{collect_user_args, get_current_working_dir, get_dir_from_str, exit_program};
+pub use utils::{collect_user_args, exit_program, get_current_working_dir, get_abs_dir_from_str};
 
 const MAX_FILE_LEN: usize = 255;
 const MAX_ABS_PATH_LEN: usize = 4096;

@@ -6,9 +6,11 @@ fn main() -> Result<(), Box<dyn Error>> {
         1 => cfl::is_file_len_valid(&args.next().unwrap(), cfl::get_current_working_dir()?)?,
         2 => cfl::is_file_len_valid(
             &args.next().unwrap(),
-            cfl::get_dir_from_str(&args.next().unwrap())?,
+            cfl::get_abs_dir_from_str(&args.next().unwrap())?,
         )?,
-        3 => todo!(),
+        3 => {
+            todo!()
+        }
         _ => {
             cfl::print_doc();
             true
