@@ -19,11 +19,19 @@ pub fn build_path(mut args: std::env::Args) -> Result<PathBuf, Box<dyn Error>> {
     Ok(dest_dir)
 }
 
-pub fn get_current_working_dir() -> std::io::Result<PathBuf> {
+pub fn collect_user_args() -> std::env::Args {
+    std::env::args()
+}
+
+pub fn exit_program(exit_code: i32) -> ! {
+    std::process::exit(exit_code)
+}
+
+fn get_current_working_dir() -> std::io::Result<PathBuf> {
     PathBuf::from(".").canonicalize()
 }
 
-pub fn find_longest_path(dir: PathBuf) -> Result<PathBuf, std::io::Error> {
+fn find_longest_path(dir: PathBuf) -> Result<PathBuf, std::io::Error> {
     let mut longest_abs_path = dir.clone();
     if dir.is_dir() {
         for entry in std::fs::read_dir(dir)? {
@@ -49,19 +57,11 @@ fn get_max_abs_path(path1: PathBuf, path2: PathBuf) -> PathBuf {
     }
 }
 
-pub fn get_abs_dir_from_str(dirname: &str) -> Result<PathBuf, std::io::Error> {
+fn get_abs_dir_from_str(dirname: &str) -> Result<PathBuf, std::io::Error> {
     PathBuf::from(dirname).canonicalize()
 }
 
-pub fn collect_user_args() -> std::env::Args {
-    std::env::args()
-}
-
-pub fn exit_program(exit_code: i32) -> ! {
-    std::process::exit(exit_code)
-}
-
-pub fn parse_path(path: String, prefix: String) -> String {
+fn parse_path(path: String, prefix: String) -> String {
     let mut ctr = 0;
     let mut ptr = 0;
     for el in prefix.chars() {
