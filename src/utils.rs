@@ -10,8 +10,6 @@ pub fn filename_is_unique(filename: &str, path: &PathBuf) -> Result<bool, Box<dy
     Ok(true)
 }
 
-
-
 pub fn get_current_working_dir() -> std::io::Result<PathBuf> {
     PathBuf::from(".").canonicalize()
 }
