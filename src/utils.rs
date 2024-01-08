@@ -66,4 +66,3 @@ fn parse_path(path: PathBuf, prefix: PathBuf) -> PathBuf {
     let ctr = prefix.components().count();
     path.components().skip(ctr - 1).collect()
 }
-
