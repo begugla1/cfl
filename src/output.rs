@@ -1,26 +1,28 @@
-use std::path::PathBuf;
+use super::{AnalysisResult, MAX_ABS_PATH_LEN, MAX_FILE_LEN};
 
-use super::{MAX_ABS_PATH_LEN, MAX_FILE_LEN};
-
-pub fn print_file_len_analisys_result(
-    (filename_byte_len, abs_path_len): (usize, usize),
-    (filename_len_valid, abs_file_path_len_valid): (bool, bool),
-    abs_path: PathBuf,
+pub fn print_file_len_analysis_result(
+    AnalysisResult {
+        filename_len,
+        abs_path_len,
+        filename_len_valid,
+        abs_path_len_valid,
+        abs_path,
+    }: &AnalysisResult,
 ) {
     println!("Considered file: '{}'", abs_path.display());
-    let filename_result_template = if filename_len_valid {
+    let filename_result_template = if *filename_len_valid {
         "Filename len valid ✅"
     } else {
         "Filename len invalid ❌"
     };
-    let abs_path_result_template = if abs_file_path_len_valid {
+    let abs_path_result_template = if *abs_path_len_valid {
         "Absolute file path len valid ✅"
     } else {
         "Absolute file path len invalid ❌"
     };
     println!(
         "{} {}/{} bytes",
-        filename_result_template, filename_byte_len, MAX_FILE_LEN
+        filename_result_template, filename_len, MAX_FILE_LEN
     );
     println!(
         "{} {}/{} bytes",
