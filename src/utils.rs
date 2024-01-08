@@ -2,8 +2,8 @@ use std::{error::Error, os::unix::ffi::OsStrExt, path::PathBuf};
 
 pub fn build_path(mut args: std::env::Args) -> Result<PathBuf, Box<dyn Error>> {
     args.next();
-    let raw_filename = args.next().expect("Filename argument expected");
-    let mut filename = get_path_from_str(&raw_filename, false)?;
+    let raw_filename = get_path_from_str(&args.next().expect("Filename argument expected"), false)?;
+    let mut filename = raw_filename.clone();
     if filename.exists() {
         filename = find_longest_path(filename)?;
     }
@@ -11,11 +11,8 @@ pub fn build_path(mut args: std::env::Args) -> Result<PathBuf, Box<dyn Error>> {
     if let Some(dirname) = args.next() {
         dest_dir = get_path_from_str(&dirname, true)?;
     }
-    let parsed_filename = parse_path(
-        filename.as_os_str().to_str().unwrap().to_string(),
-        raw_filename,
-    );
-    dest_dir.push(get_path_from_str(&parsed_filename, false)?);
+    let parsed_filename = parse_path(filename, raw_filename);
+    dest_dir.push(parsed_filename);
     Ok(dest_dir)
 }
 
@@ -65,22 +62,8 @@ fn get_path_from_str(dirname: &str, is_abs: bool) -> Result<PathBuf, std::io::Er
     Ok(path)
 }
 
-fn parse_path(path: String, prefix: String) -> String {
-    let mut ctr = 0;
-    let mut ptr = 0;
-    for el in prefix.chars() {
-        if el == '/' {
-            ctr += 1;
-        }
-    }
-    if let Some('/') = prefix.chars().last() {
-        ctr -= 1;
-    }
-    while ctr > 0 {
-        if path.chars().nth(ptr).unwrap() == '/' {
-            ctr -= 1;
-        }
-        ptr += 1;
-    }
-    path.chars().skip(ptr).collect::<String>()
+fn parse_path(path: PathBuf, prefix: PathBuf) -> PathBuf {
+    let ctr = prefix.components().count();
+    path.components().skip(ctr - 1).collect()
 }
+
