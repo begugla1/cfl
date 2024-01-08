@@ -9,7 +9,7 @@ fn main() -> io::Result<()> {
         let path = cfl::build_path(args)?;
         let analysis_result = cfl::make_file_len_analysis(path);
         cfl::print_file_len_analysis_result(&analysis_result);
-        exit_code = cfl::generate_exit_code(analysis_result);
+        exit_code = cfl::generate_exit_code(&analysis_result);
     }
     cfl::exit_program(exit_code)
 }

@@ -1,7 +1,7 @@
 use crate::AnalysisResult;
 pub struct ExitCode(pub i32);
 
-pub fn generate_exit_code(analisys_result: AnalysisResult) -> ExitCode {
+pub fn generate_exit_code(analisys_result: &AnalysisResult) -> ExitCode {
     ExitCode(!analisys_result.is_successful() as i32)
 }
 
