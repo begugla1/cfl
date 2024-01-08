@@ -11,3 +11,10 @@ make attach_cfl
 ```
 
 Make sure, that you have **make** installed on your machine
+If you have any strange problems, you can install **rust** with **cargo** and run next command in the repo
+
+```sh
+make build
+```
+
+This command will compile new binary compatable to your machine
